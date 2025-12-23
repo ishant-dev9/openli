@@ -2,84 +2,83 @@
 <html lang="en">
 
 <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>openli — school thought club</title>
-    <link rel="stylesheet" href="css/style.css">
-
-
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>openli — school thought club</title>
+  <link rel="stylesheet" href="css/style.css">
 </head>
 
 <body>
 
-    <!-- Top Header -->
-    <header>
-        <h1>openli</h1>
-        <p>An anonymous thought-sharing club for students</p>
-    </header>
+  <!-- Top Header -->
+  <header>
+    <h1>openli</h1>
+    <p>An anonymous thought-sharing club for students</p>
+  </header>
 
-    <!-- Main Layout -->
-    <div>
+  <!-- Main Layout -->
+  <div class="layout">
 
-        <!-- Left: Feed Area -->
-        <main>
+    <!-- Left: Feed Area -->
+    <main class="feed">
 
-            <!-- User Identity (Anonymous) -->
-            <section>
-                <div>
-                    <div>[PFP]</div>
-                    <div>
-                        <strong>Anonymous Student</strong>
-                        <p>Group: NEEV</p>
-                    </div>
-                </div>
-            </section>
+      <!-- User Identity Card -->
+      <section class="user-card">
+        <div class="user-avatar">PF</div>
 
-            <!-- Create Post -->
-            <section>
-                <textarea placeholder="Share your thoughts anonymously..." maxlength="280" rows="3"></textarea>
-                <button>Post</button>
-            </section>
+        <div class="user-info">
+          <strong>Anonymous Student</strong>
+          <span>Group: NEEV</span>
+        </div>
+      </section>
 
-            <!-- Posts -->
-            <article>
-                <p><strong>NEEV-102</strong></p>
-                <p>School pressure is real. Mental health matters.</p>
-                <button>❤️ 14</button>
-            </article>
+      <!-- Create Post -->
+      <section class="composer">
+        <textarea
+          placeholder="Share your thoughts anonymously..."
+          maxlength="280"
+          rows="3"></textarea>
+        <button>Post</button>
+      </section>
 
-            <article>
-                <p><strong>UDAAN-77</strong></p>
-                <p>Teachers should encourage curiosity, not fear.</p>
-                <button>❤️ 9</button>
-            </article>
+      <!-- Posts -->
+      <article class="post">
+        <p class="post-id"><strong>NEEV-102</strong></p>
+        <p>School pressure is real. Mental health matters.</p>
+        <button class="like-btn">❤️ 14</button>
+      </article>
 
-        </main>
+      <article class="post">
+        <p class="post-id"><strong>UDAAN-77</strong></p>
+        <p>Teachers should encourage curiosity, not fear.</p>
+        <button class="like-btn">❤️ 9</button>
+      </article>
 
-        <!-- Right: Instructions Sidebar -->
-        <aside>
-            <h3>Clubs & Instructions</h3>
+    </main>
 
-            <ul>
-                <li><strong>NEEV</strong> → Class 9</li>
-                <li><strong>UDAAN</strong> → Class 10</li>
-                <li><strong>AKSHYA</strong> → Class 11</li>
-                <li><strong>FINAL</strong> → Class 12</li>
-                <li><strong>ALUMNI</strong> → Passed-out students</li>
-            </ul>
+    <!-- Right: Instructions Sidebar -->
+    <aside class="sidebar">
+      <h3>Clubs & Instructions</h3>
 
-            <p>
-                • Every user gets an anonymous identity<br>
-                • One person can join only one club<br>
-                • Posts are anonymous and respectful<br>
-                • No real names or photos allowed
-            </p>
+      <ul>
+        <li><strong>NEEV</strong> → Class 9</li>
+        <li><strong>UDAAN</strong> → Class 10</li>
+        <li><strong>AKSHYA</strong> → Class 11</li>
+        <li><strong>FINAL</strong> → Class 12</li>
+        <li><strong>ALUMNI</strong> → Passed-out students</li>
+      </ul>
 
-            <small>Made with ❤️ by Ishant</small>
-        </aside>
+      <p class="rules">
+        • Every user gets an anonymous identity<br>
+        • One person can join only one club<br>
+        • Posts are anonymous and respectful<br>
+        • No real names or photos allowed
+      </p>
 
-    </div>
+      <small>Made with ❤️ by Ishant</small>
+    </aside>
+
+  </div>
 
 </body>
-
 </html>

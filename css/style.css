@@ -159,3 +159,46 @@ aside small {
         grid-template-columns: 1fr;
     }
 }
+/* =========================
+   User Card (Top Composer)
+========================= */
+
+.user-card {
+  background: #ffffff;
+  border-radius: 12px;
+  padding: 16px 18px;
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  margin-bottom: 16px;
+  border: 1px solid #e5e7eb;
+}
+
+.user-avatar {
+  width: 48px;
+  height: 48px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, #6366f1, #3b82f6);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #ffffff;
+  font-weight: 700;
+  font-size: 14px;
+  flex-shrink: 0;
+}
+
+.user-info {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.user-info strong {
+  font-size: 15px;
+}
+
+.user-info span {
+  font-size: 13px;
+  color: #6b7280;
+}
