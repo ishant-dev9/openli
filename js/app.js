@@ -1,8 +1,9 @@
 // ===============================
-// STEP 4 – IDENTITY + POSTS (CLEAN & FINAL)
+// OPENLI — STEP 4 (FINAL, STABLE)
+// Identity + Posts System
 // ===============================
 
-// DOM Elements
+// ---------- DOM ----------
 const onboarding = document.getElementById("onboarding");
 const joinBtn = document.getElementById("joinBtn");
 const clubSelect = document.getElementById("clubSelect");
@@ -11,7 +12,7 @@ const textarea = document.querySelector(".composer textarea");
 const postBtn = document.querySelector(".composer button");
 const postsContainer = document.querySelector(".posts-container");
 
-// Storage keys (single source of truth)
+// ---------- STORAGE KEYS ----------
 const USER_KEY = "openli_user";
 const POST_KEY = "openli_posts";
 const COUNT_PREFIX = "openli_count_";
@@ -19,7 +20,6 @@ const COUNT_PREFIX = "openli_count_";
 // ===============================
 // USER SYSTEM
 // ===============================
-
 function getUser() {
   return JSON.parse(localStorage.getItem(USER_KEY));
 }
@@ -44,7 +44,6 @@ function showUser(user) {
 // ===============================
 // ONBOARDING
 // ===============================
-
 joinBtn.addEventListener("click", () => {
   const club = clubSelect.value;
   if (!club) return alert("Please select a club");
@@ -62,28 +61,28 @@ joinBtn.addEventListener("click", () => {
 // ===============================
 // TIME FORMATTER
 // ===============================
-
 function formatTime(timestamp) {
   const diff = Date.now() - timestamp;
-  const seconds = Math.floor(diff / 1000);
-  const minutes = Math.floor(seconds / 60);
-  const hours = Math.floor(minutes / 60);
+  const sec = Math.floor(diff / 1000);
 
-  if (seconds < 60) return "just now";
-  if (minutes < 60) return `${minutes} min ago`;
-  if (hours < 24) return `${hours} hr ago`;
+  if (sec < 10) return "just now";
+  if (sec < 60) return `${sec} sec ago`;
 
-  return new Date(timestamp).toLocaleDateString("en-IN", {
-    day: "numeric",
-    month: "short",
-    year: "numeric"
-  });
+  const min = Math.floor(sec / 60);
+  if (min < 60) return `${min} min ago`;
+
+  const hr = Math.floor(min / 60);
+  if (hr < 24) return `${hr} hr ago`;
+
+  const day = Math.floor(hr / 24);
+  if (day < 7) return `${day} day${day > 1 ? "s" : ""} ago`;
+
+  return new Date(timestamp).toLocaleDateString();
 }
 
 // ===============================
 // POSTS SYSTEM
 // ===============================
-
 function getPosts() {
   return JSON.parse(localStorage.getItem(POST_KEY)) || [];
 }
@@ -99,22 +98,27 @@ function renderPost(post) {
   article.innerHTML = `
     <p class="post-id">
       <strong>${post.id}</strong>
-      <span style="color:#6b7280;font-size:12px;">
-        · ${formatTime(post.time)}
-      </span>
+      <span class="post-time"> · ${formatTime(post.time)}</span>
     </p>
-    <p>${post.text}</p>
+    <p class="post-text">${post.text}</p>
     <button class="like-btn">❤️ ${post.likes}</button>
   `;
 
-  postsContainer.prepend(article); // ✅ latest on top, profile stays fixed
+  postsContainer.appendChild(article);
 }
 
-function loadPosts() {
-  const posts = getPosts();
+function renderAllPosts() {
+  postsContainer.innerHTML = "";
+
+  const posts = getPosts()
+    .sort((a, b) => b.time - a.time); // 🔥 ALWAYS newest first
+
   posts.forEach(renderPost);
 }
 
+// ===============================
+// CREATE POST
+// ===============================
 function createPost() {
   const text = textarea.value.trim();
   if (!text) return;
@@ -131,11 +135,11 @@ function createPost() {
   };
 
   const posts = getPosts();
-  posts.unshift(post);
+  posts.push(post); // order fixed by sorting
   savePosts(posts);
 
-  renderPost(post);
   textarea.value = "";
+  renderAllPosts();
 }
 
 // Button click
@@ -152,7 +156,6 @@ textarea.addEventListener("keydown", (e) => {
 // ===============================
 // INIT
 // ===============================
-
 document.addEventListener("DOMContentLoaded", () => {
   const user = getUser();
 
@@ -162,5 +165,5 @@ document.addEventListener("DOMContentLoaded", () => {
     showUser(user);
   }
 
-  loadPosts();
+  renderAllPosts(); // 🔥 symmetry NEVER breaks now
 });

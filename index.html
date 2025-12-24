@@ -28,31 +28,34 @@
     =============================== -->
     <main class="feed">
 
-      <!-- USER IDENTITY (FIXED) -->
-      <section class="user-card">
+      <!-- USER IDENTITY (FIXED TOP) -->
+      <section class="user-card" id="userCard">
         <div class="user-avatar">PF</div>
         <div class="user-info">
-          <strong>Anonymous</strong>
-          <span>Group: —</span>
+          <strong id="userName">Anonymous</strong>
+          <span id="userGroup">Group: —</span>
         </div>
       </section>
 
-      <!-- COMPOSER (FIXED) -->
+      <!-- COMPOSER (FIXED TOP) -->
       <section class="composer">
         <textarea
+          id="postInput"
           placeholder="Share your thoughts anonymously..."
           maxlength="280"
           rows="3"></textarea>
-        <button>Post</button>
+        <button id="postBtn">Post</button>
       </section>
 
-      <!-- 🔥 POSTS CONTAINER (ONLY THIS MOVES) -->
-      <section class="posts-container"></section>
+      <!-- POSTS (ONLY THIS SCROLLS / UPDATES) -->
+      <section class="posts-container" id="postsContainer">
+        <!-- Posts injected by JS -->
+      </section>
 
     </main>
 
     <!-- ===============================
-         RIGHT: SIDEBAR
+         RIGHT: SIDEBAR (STICKY)
     =============================== -->
     <aside class="sidebar">
       <h3>Clubs & Instructions</h3>
@@ -103,7 +106,9 @@
     </div>
   </div>
 
-  <!-- SCRIPT -->
+  <!-- ===============================
+       SCRIPT
+  =============================== -->
   <script src="js/app.js"></script>
 
 </body>
