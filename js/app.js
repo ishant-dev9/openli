@@ -1,5 +1,5 @@
 // ===============================
-// STEP 4 – UNIFIED IDENTITY + POSTS
+// STEP 4 – UNIFIED IDENTITY + POSTS + TIME
 // ===============================
 
 // DOM Elements
@@ -10,7 +10,7 @@ const postBtn = document.querySelector(".composer button");
 const textarea = document.querySelector(".composer textarea");
 const feed = document.querySelector(".feed");
 
-// Storage keys (SINGLE SOURCE OF TRUTH)
+// Storage keys
 const USER_KEY = "openli_user";
 const POST_KEY = "openli_posts";
 const COUNT_PREFIX = "openli_count_";
@@ -19,17 +19,14 @@ const COUNT_PREFIX = "openli_count_";
 // USER SYSTEM
 // ===============================
 
-// Get user
 function getUser() {
   return JSON.parse(localStorage.getItem(USER_KEY));
 }
 
-// Save user
 function saveUser(user) {
   localStorage.setItem(USER_KEY, JSON.stringify(user));
 }
 
-// Generate unique ID per club
 function generateUserId(club) {
   const key = `${COUNT_PREFIX}${club}`;
   let count = localStorage.getItem(key);
@@ -38,7 +35,6 @@ function generateUserId(club) {
   return `${club}-${count}`;
 }
 
-// Show user in UI
 function showUser(user) {
   const nameEl = document.querySelector(".user-info strong");
   const groupEl = document.querySelector(".user-info span");
@@ -55,7 +51,6 @@ function showUser(user) {
 
 joinBtn.addEventListener("click", () => {
   const club = clubSelect.value;
-
   if (!club) {
     alert("Please select a club");
     return;
@@ -72,29 +67,65 @@ joinBtn.addEventListener("click", () => {
 });
 
 // ===============================
+// TIME UTILITIES
+// ===============================
+
+function getRelativeTime(timestamp) {
+  const diff = Date.now() - timestamp;
+  const seconds = Math.floor(diff / 1000);
+  const minutes = Math.floor(seconds / 60);
+  const hours = Math.floor(minutes / 60);
+  const days = Math.floor(hours / 24);
+  const weeks = Math.floor(days / 7);
+  const months = Math.floor(days / 30);
+  const years = Math.floor(days / 365);
+
+  if (seconds < 10) return "Just now";
+  if (seconds < 60) return `${seconds} sec ago`;
+  if (minutes < 60) return `${minutes} min ago`;
+  if (hours < 24) return `${hours} hour${hours > 1 ? "s" : ""} ago`;
+  if (days === 1) return "Yesterday";
+  if (days < 7) return `${days} days ago`;
+  if (weeks < 5) return `${weeks} week${weeks > 1 ? "s" : ""} ago`;
+  if (months < 12) return `${months} month${months > 1 ? "s" : ""} ago`;
+  return `${years} year${years > 1 ? "s" : ""} ago`;
+}
+
+function formatFullDate(timestamp) {
+  const date = new Date(timestamp);
+  return date.toLocaleDateString("en-IN", {
+    day: "numeric",
+    month: "short",
+    year: "numeric"
+  });
+}
+
+// ===============================
 // POSTS SYSTEM
 // ===============================
 
-// Save post
 function savePost(post) {
   const posts = JSON.parse(localStorage.getItem(POST_KEY)) || [];
   posts.unshift(post);
   localStorage.setItem(POST_KEY, JSON.stringify(posts));
 }
 
-// Load posts
 function loadPosts() {
   const posts = JSON.parse(localStorage.getItem(POST_KEY)) || [];
   posts.forEach(renderPost);
 }
 
-// Render post
 function renderPost(post) {
   const article = document.createElement("article");
   article.className = "post";
 
   article.innerHTML = `
-    <p class="post-id"><strong>${post.id}</strong></p>
+    <div class="post-meta">
+      <strong>${post.id}</strong>
+      <span class="post-time" title="Posted on ${formatFullDate(post.time)}">
+        • ${getRelativeTime(post.time)}
+      </span>
+    </div>
     <p>${post.text}</p>
     <button class="like-btn">❤️ ${post.likes}</button>
   `;
@@ -127,7 +158,7 @@ postBtn.addEventListener("click", () => {
 });
 
 // ===============================
-// INIT ON LOAD
+// INIT
 // ===============================
 
 document.addEventListener("DOMContentLoaded", () => {
