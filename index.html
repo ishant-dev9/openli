@@ -10,29 +10,34 @@
 
 <body>
 
-  <!-- Top Header -->
+  <!-- ===============================
+       HEADER
+  =============================== -->
   <header>
     <h1>openli</h1>
     <p>An anonymous thought-sharing club for students</p>
   </header>
 
-  <!-- Main Layout -->
+  <!-- ===============================
+       MAIN LAYOUT
+  =============================== -->
   <div class="layout">
 
-    <!-- Left: Feed Area -->
+    <!-- ===============================
+         LEFT: FEED AREA
+    =============================== -->
     <main class="feed">
 
-      <!-- User Identity Card -->
+      <!-- USER IDENTITY (FIXED) -->
       <section class="user-card">
         <div class="user-avatar">PF</div>
-
         <div class="user-info">
-          <strong>Anonymous Student</strong>
-          <span>Group: NEEV</span>
+          <strong>Anonymous</strong>
+          <span>Group: —</span>
         </div>
       </section>
 
-      <!-- Create Post -->
+      <!-- COMPOSER (FIXED) -->
       <section class="composer">
         <textarea
           placeholder="Share your thoughts anonymously..."
@@ -41,22 +46,14 @@
         <button>Post</button>
       </section>
 
-      <!-- Posts -->
-      <article class="post">
-        <p class="post-id"><strong>NEEV-102</strong></p>
-        <p>School pressure is real. Mental health matters.</p>
-        <button class="like-btn">❤️ 14</button>
-      </article>
-
-      <article class="post">
-        <p class="post-id"><strong>UDAAN-77</strong></p>
-        <p>Teachers should encourage curiosity, not fear.</p>
-        <button class="like-btn">❤️ 9</button>
-      </article>
+      <!-- 🔥 POSTS CONTAINER (ONLY THIS MOVES) -->
+      <section class="posts-container"></section>
 
     </main>
 
-    <!-- Right: Instructions Sidebar -->
+    <!-- ===============================
+         RIGHT: SIDEBAR
+    =============================== -->
     <aside class="sidebar">
       <h3>Clubs & Instructions</h3>
 
@@ -80,32 +77,34 @@
 
   </div>
 
-  <!-- Onboarding Modal -->
-<div id="onboarding" class="onboarding hidden">
-  <div class="onboarding-box">
-    <h2>Welcome to openli</h2>
-    <p>Choose your club to get an anonymous identity</p>
+  <!-- ===============================
+       ONBOARDING MODAL
+  =============================== -->
+  <div id="onboarding" class="onboarding hidden">
+    <div class="onboarding-box">
+      <h2>Welcome to openli</h2>
+      <p>Choose your club to get an anonymous identity</p>
 
-    <select id="clubSelect">
-      <option value="">Select your club</option>
-      <option value="NEEV">NEEV – Class 9</option>
-      <option value="UDAAN">UDAAN – Class 10</option>
-      <option value="AKSHYA">AKSHYA – Class 11</option>
-      <option value="FINAL">FINAL – Class 12</option>
-      <option value="ALUMNI">ALUMNI – Passed-out</option>
-    </select>
+      <select id="clubSelect">
+        <option value="">Select your club</option>
+        <option value="NEEV">NEEV – Class 9</option>
+        <option value="UDAAN">UDAAN – Class 10</option>
+        <option value="AKSHYA">AKSHYA – Class 11</option>
+        <option value="FINAL">FINAL – Class 12</option>
+        <option value="ALUMNI">ALUMNI – Passed-out</option>
+      </select>
 
-    <button id="joinBtn">Join Club</button>
+      <button id="joinBtn">Join Club</button>
 
-    <p class="note">
-      • One person can join only one club<br>
-      • Identity is anonymous & permanent
-    </p>
+      <p class="note">
+        • One person can join only one club<br>
+        • Identity is anonymous & permanent
+      </p>
+    </div>
   </div>
-</div>
 
-<script src="js/app.js"></script>
-
+  <!-- SCRIPT -->
+  <script src="js/app.js"></script>
 
 </body>
 </html>

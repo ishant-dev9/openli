@@ -1,21 +1,22 @@
 /* =========================
-   Design Tokens
+   DESIGN TOKENS (BRAND)
 ========================= */
 
 :root {
-  --accent: #4f46e5;           /* Strong Indigo (brand-safe) */
+  --accent: #4f46e5;              /* Brand Indigo */
   --accent-soft: #eef2ff;
   --accent-glow: rgba(79, 70, 229, 0.35);
 
   --bg-main: #f5f7fa;
   --bg-card: #ffffff;
   --border-soft: #e5e7eb;
+
   --text-main: #1f2933;
   --text-muted: #6b7280;
 }
 
 /* =========================
-   Reset & Base
+   RESET & BASE
 ========================= */
 
 * {
@@ -32,7 +33,7 @@ body {
 }
 
 /* =========================
-   HEADER – BRAND IDENTITY
+   HEADER (LOGO FIXED)
 ========================= */
 
 header {
@@ -42,21 +43,19 @@ header {
   border-bottom: 1px solid var(--border-soft);
 }
 
-/* 🔥 FIXED: CLEAR, VISIBLE, BRAND-SAFE LOGO */
 header h1 {
   font-size: 42px;
   font-weight: 900;
   letter-spacing: -0.6px;
 
-  /* SOLID brand color (no transparency) */
+  /* SOLID COLOR — NO TRANSPARENCY */
   color: var(--accent);
 
-  /* Subtle depth */
+  /* Depth + Glow */
   text-shadow:
-    0 1px 0 rgba(255, 255, 255, 0.8),
+    0 1px 0 rgba(255, 255, 255, 0.9),
     0 6px 18px rgba(79, 70, 229, 0.25);
 
-  /* Slight glow for modern feel */
   filter: drop-shadow(0 0 6px rgba(79, 70, 229, 0.25));
 }
 
@@ -90,7 +89,7 @@ header p {
 }
 
 /* =========================
-   USER CARD
+   USER CARD (FIXED POSITION)
 ========================= */
 
 .user-card {
@@ -101,6 +100,10 @@ header p {
   align-items: center;
   gap: 14px;
   border: 1px solid var(--border-soft);
+
+  position: sticky;
+  top: 16px;
+  z-index: 10;
 }
 
 .user-avatar {
@@ -111,7 +114,7 @@ header p {
   display: flex;
   align-items: center;
   justify-content: center;
-  color: #ffffff;
+  color: white;
   font-weight: 700;
   font-size: 14px;
   box-shadow:
@@ -165,7 +168,7 @@ header p {
 }
 
 /* =========================
-   POSTS
+   POSTS (NEWEST ON TOP)
 ========================= */
 
 .post {
@@ -183,6 +186,12 @@ header p {
 
 .post-id {
   font-size: 14px;
+  margin-bottom: 4px;
+}
+
+.post-time {
+  font-size: 12px;
+  color: var(--text-muted);
   margin-bottom: 6px;
 }
 
@@ -235,18 +244,9 @@ header p {
 }
 
 /* =========================
-   RESPONSIVE
+   ONBOARDING MODAL
 ========================= */
 
-@media (max-width: 768px) {
-  .layout {
-    grid-template-columns: 1fr;
-  }
-
-  header h1 {
-    font-size: 34px;
-  }
-}
 .onboarding {
   position: fixed;
   inset: 0;
@@ -298,4 +298,22 @@ header p {
   margin-top: 14px;
   font-size: 12px;
   color: #6b7280;
+}
+
+/* =========================
+   RESPONSIVE
+========================= */
+
+@media (max-width: 768px) {
+  .layout {
+    grid-template-columns: 1fr;
+  }
+
+  header h1 {
+    font-size: 34px;
+  }
+
+  .user-card {
+    position: static;
+  }
 }
