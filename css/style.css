@@ -1,5 +1,5 @@
 /* =========================
-   DESIGN TOKENS (BRAND)
+   DESIGN TOKENS
 ========================= */
 :root {
   --accent: #4f46e5;
@@ -10,12 +10,12 @@
   --bg-card: #ffffff;
   --border-soft: #e5e7eb;
 
-  --text-main: #1f2933;
+  --text-main: #1f2937;
   --text-muted: #6b7280;
 }
 
 /* =========================
-   RESET & BASE
+   RESET
 ========================= */
 * {
   margin: 0;
@@ -35,9 +35,9 @@ body {
    HEADER
 ========================= */
 header {
-  text-align: center;
-  padding: 44px 16px 34px;
   background: var(--bg-card);
+  text-align: center;
+  padding: 42px 16px 32px;
   border-bottom: 1px solid var(--border-soft);
 }
 
@@ -46,9 +46,7 @@ header h1 {
   font-weight: 900;
   color: var(--accent);
   letter-spacing: -0.6px;
-  text-shadow:
-    0 1px 0 rgba(255,255,255,0.9),
-    0 6px 18px rgba(79,70,229,0.25);
+  text-shadow: 0 6px 18px rgba(79, 70, 229, 0.25);
 }
 
 header p {
@@ -58,7 +56,7 @@ header p {
 }
 
 /* =========================
-   MAIN LAYOUT
+   LAYOUT
 ========================= */
 .layout {
   max-width: 1100px;
@@ -79,19 +77,19 @@ header p {
 }
 
 /* =========================
-   USER CARD (STICKY)
+   USER CARD
 ========================= */
 .user-card {
   background: var(--bg-card);
   border-radius: 14px;
   padding: 16px 18px;
   display: flex;
+  justify-content: space-between;
   align-items: center;
-  gap: 14px;
   border: 1px solid var(--border-soft);
   position: sticky;
   top: 16px;
-  z-index: 10;
+  z-index: 20;
 }
 
 .user-avatar {
@@ -99,12 +97,11 @@ header p {
   height: 48px;
   border-radius: 50%;
   background: linear-gradient(135deg, #4f46e5, #3b82f6);
+  color: white;
   display: flex;
   align-items: center;
   justify-content: center;
-  color: white;
   font-weight: 700;
-  font-size: 14px;
 }
 
 .user-info span {
@@ -113,28 +110,16 @@ header p {
 }
 
 /* =========================
-   COMPOSER (STICKY)
+   COMPOSER
 ========================= */
-.composer {
-  position: sticky;
-  top: 92px;
-  background: var(--bg-main);
-  z-index: 9;
-  padding-bottom: 8px;
-}
-
 .composer textarea {
   width: 100%;
-  padding: 12px;
+  padding: 14px;
   border-radius: 14px;
   border: 1px solid #d1d5db;
   resize: none;
-  font-size: 14px;
-}
-
-.composer textarea:focus {
   outline: none;
-  border-color: var(--accent);
+  word-break: break-word;
 }
 
 .composer button {
@@ -149,7 +134,7 @@ header p {
 }
 
 /* =========================
-   POSTS CONTAINER
+   POSTS
 ========================= */
 .posts-container {
   display: flex;
@@ -157,9 +142,6 @@ header p {
   gap: 16px;
 }
 
-/* =========================
-   POST CARD
-========================= */
 .post {
   background: var(--bg-card);
   border-radius: 14px;
@@ -169,53 +151,23 @@ header p {
   overflow-wrap: anywhere;
 }
 
-.post-text {
-  white-space: pre-wrap;
-  overflow-wrap: anywhere;
-  margin-top: 6px;
-}
-
-.post-id {
+.post-header {
   font-size: 14px;
-  font-weight: 600;
 }
 
-.post-time {
+.post-header span {
   font-size: 12px;
   color: var(--text-muted);
 }
 
-/* =========================
-   REPOST + QUOTE UI (STEP 6)
-========================= */
-
-/* Repost info (shown above text) */
-.repost-info {
-  font-size: 13px;
-  color: var(--text-muted);
-  margin-bottom: 6px;
+.post-text {
+  margin-top: 8px;
+  white-space: pre-wrap;
 }
 
-/* Quote box */
-.quote-box {
-  background: var(--accent-soft);
-  border-left: 3px solid var(--accent);
-  padding: 10px 12px;
-  border-radius: 8px;
-  margin-bottom: 8px;
-}
-
-.quote-text {
-  font-size: 14px;
-  color: #1e293b;
-}
-
-/* =========================
-   POST ACTIONS
-========================= */
 .post-actions {
   display: flex;
-  gap: 16px;
+  gap: 14px;
   margin-top: 10px;
 }
 
@@ -224,28 +176,15 @@ header p {
   border: none;
   cursor: pointer;
   font-size: 14px;
-  color: var(--text-muted);
-}
-
-.post-actions button:hover {
-  color: var(--accent);
-}
-
-.like-btn {
-  color: #ef4444;
 }
 
 /* =========================
    COMMENTS
 ========================= */
-.comments-box {
+.comments {
   margin-top: 12px;
-  padding-top: 10px;
+  padding-top: 12px;
   border-top: 1px solid var(--border-soft);
-}
-
-.comments-box.hidden {
-  display: none;
 }
 
 .comment {
@@ -253,96 +192,26 @@ header p {
   margin-bottom: 8px;
 }
 
-.comment span {
-  color: var(--text-muted);
-  font-size: 12px;
-}
-
 .comment-input {
-  display: flex;
-  gap: 8px;
-  margin-top: 8px;
-}
-
-.comment-input input {
-  flex: 1;
-  padding: 8px 12px;
-  border-radius: 999px;
-  border: 1px solid #d1d5db;
-}
-
-.comment-input button {
-  padding: 8px 14px;
-  border-radius: 999px;
-  border: none;
-  background: var(--accent);
-  color: white;
-  cursor: pointer;
-}
-
-/* =========================
-   QUOTE MODAL (STEP 6)
-========================= */
-.quote-modal {
-  position: fixed;
-  inset: 0;
-  background: rgba(15, 23, 42, 0.65);
-  backdrop-filter: blur(6px);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  z-index: 1000;
-}
-
-.quote-modal.hidden {
-  display: none;
-}
-
-.quote-box-modal {
-  background: white;
-  padding: 22px;
-  border-radius: 14px;
-  width: 90%;
-  max-width: 400px;
-}
-
-.quote-box-modal h3 {
-  margin-bottom: 8px;
-}
-
-.quote-box-modal textarea {
   width: 100%;
-  padding: 10px;
+  padding: 8px;
   border-radius: 10px;
   border: 1px solid #d1d5db;
   resize: none;
 }
 
-.quote-actions {
-  display: flex;
-  justify-content: flex-end;
-  gap: 10px;
-  margin-top: 12px;
-}
-
-.quote-actions button {
-  padding: 8px 14px;
+.comment-btn {
+  margin-top: 6px;
+  padding: 6px 14px;
   border-radius: 999px;
   border: none;
+  background: var(--accent);
+  color: white;
   cursor: pointer;
 }
 
-#cancelQuote {
-  background: #e5e7eb;
-}
-
-#confirmQuote {
-  background: var(--accent);
-  color: white;
-}
-
 /* =========================
-   SIDEBAR (STICKY)
+   SIDEBAR
 ========================= */
 .sidebar {
   background: var(--bg-card);
@@ -351,27 +220,24 @@ header p {
   border: 1px solid var(--border-soft);
   position: sticky;
   top: 16px;
-  height: fit-content;
-  font-size: 14px;
+}
+
+.sidebar h3 {
+  margin-bottom: 10px;
 }
 
 .sidebar ul {
   list-style: none;
-  margin-bottom: 14px;
+  margin-bottom: 12px;
 }
 
 .sidebar li {
+  font-size: 14px;
   margin-bottom: 6px;
 }
 
-.sidebar small {
-  display: block;
-  margin-top: 12px;
-  color: var(--text-muted);
-}
-
 /* =========================
-   ONBOARDING MODAL
+   ONBOARDING MODAL (FIXED)
 ========================= */
 .onboarding {
   position: fixed;
@@ -381,11 +247,7 @@ header p {
   display: flex;
   align-items: center;
   justify-content: center;
-  z-index: 999;
-}
-
-.onboarding.hidden {
-  display: none;
+  z-index: 9999;
 }
 
 .onboarding-box {
@@ -395,10 +257,20 @@ header p {
   width: 90%;
   max-width: 380px;
   text-align: center;
-  box-shadow: 0 25px 70px rgba(0,0,0,0.3);
+  box-shadow: 0 30px 80px rgba(0,0,0,0.25);
 }
 
-.onboarding-box select {
+.onboarding-box h2 {
+  margin-bottom: 6px;
+}
+
+.onboarding-box p {
+  font-size: 14px;
+  color: var(--text-muted);
+}
+
+.onboarding-box select,
+.onboarding-box button {
   width: 100%;
   margin-top: 12px;
   padding: 10px;
@@ -407,14 +279,14 @@ header p {
 }
 
 .onboarding-box button {
-  width: 100%;
-  margin-top: 12px;
-  padding: 10px;
-  border-radius: 999px;
-  border: none;
   background: var(--accent);
   color: white;
-  font-weight: 600;
+  border: none;
+  cursor: pointer;
+}
+
+.hidden {
+  display: none !important;
 }
 
 /* =========================
@@ -426,8 +298,196 @@ header p {
   }
 
   .sidebar,
-  .user-card,
-  .composer {
+  .user-card {
     position: static;
   }
+}
+.like-btn.liked {
+  color: #ef4444;
+  font-weight: 700;
+}
+/* ===============================
+   NOTIFICATION BELL
+=============================== */
+
+.notification-wrapper {
+  position: relative;
+}
+
+.notify-btn {
+  background: none;
+  border: none;
+  font-size: 20px;
+  cursor: pointer;
+  position: relative;
+}
+
+.notify-dot {
+  position: absolute;
+  top: 4px;
+  right: 4px;
+  width: 8px;
+  height: 8px;
+  background: #ef4444;
+  border-radius: 50%;
+}
+
+.notify-dot.hidden {
+  display: none;
+}
+
+/* ===============================
+   NOTIFICATION PANEL (DESKTOP)
+=============================== */
+
+.notification-panel {
+  position: absolute;
+  top: 44px;
+  right: 0;
+  width: 300px;
+  background: #ffffff;
+  border-radius: 14px;
+  border: 1px solid #e5e7eb;
+  box-shadow: 0 20px 40px rgba(0,0,0,0.15);
+  z-index: 1000;
+}
+
+.notification-panel.hidden {
+  display: none;
+}
+
+.notification-panel h4 {
+  padding: 12px 14px;
+  border-bottom: 1px solid #e5e7eb;
+  font-size: 14px;
+}
+
+.notification-list {
+  max-height: 320px;
+  overflow-y: auto;
+}
+
+.notification-item {
+  padding: 10px 14px;
+  font-size: 13px;
+  border-bottom: 1px solid #f1f5f9;
+}
+
+.notification-item.unread {
+  background: #eef2ff;
+  font-weight: 500;
+}
+
+.notif-footer {
+  padding: 10px;
+  text-align: center;
+}
+
+.notif-footer button {
+  background: none;
+  border: none;
+  color: #4f46e5;
+  cursor: pointer;
+  font-size: 13px;
+}
+
+/* ===============================
+   📱 MOBILE SLIDE-IN PANEL
+=============================== */
+
+@media (max-width: 768px) {
+  .notification-panel {
+    position: fixed;
+    top: 0;
+    right: -100%;
+    height: 100vh;
+    width: 85%;
+    max-width: 340px;
+    border-radius: 0;
+    transition: right 0.3s ease;
+    z-index: 9999;
+  }
+
+  .notification-panel.open {
+    right: 0;
+  }
+
+  body.notif-open {
+    overflow: hidden;
+  }
+}
+
+/* ===============================
+   NOTIFICATION PANEL
+=============================== */
+
+.notification-panel {
+  position: absolute;
+  top: 42px;
+  right: 0;
+  width: 280px;
+  background: #ffffff;
+  border-radius: 14px;
+  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.15);
+  border: 1px solid #e5e7eb;
+  z-index: 100;
+}
+
+.notification-panel.hidden {
+  display: none;
+}
+.notification-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 12px 14px;
+  border-bottom: 1px solid #e5e7eb;
+}
+
+.notification-header strong {
+  font-size: 14px;
+}
+
+.notification-header button {
+  background: none;
+  border: none;
+  font-size: 12px;
+  color: #6366f1;
+  cursor: pointer;
+}
+.notification-list {
+  max-height: 300px;
+  overflow-y: auto;
+}
+
+.notification-item {
+  padding: 10px 14px;
+  font-size: 13px;
+  border-bottom: 1px solid #f1f5f9;
+  cursor: pointer;
+  transition: background 0.2s ease;
+}
+
+.notification-item:hover {
+  background: #f9fafb;
+}
+
+.notification-item.unread {
+  background: #eef2ff;
+  font-weight: 500;
+}
+
+.notification-item:last-child {
+  border-bottom: none;
+}
+
+.notif-time {
+  color: #6b7280;
+  font-size: 11px;
+}
+.notification-empty {
+  padding: 16px;
+  text-align: center;
+  font-size: 13px;
+  color: #6b7280;
 }

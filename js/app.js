@@ -1,6 +1,6 @@
 // =====================================
-// OPENLI — STEP 6 (REPOST + QUOTE)
-// Identity + Posts + Comments + Reposts
+// OPENLI — STEP 7 FINAL STABLE BUILD
+// Identity + Posts + Likes + Comments + Reposts + Notifications
 // =====================================
 
 // ---------- DOM ----------
@@ -12,9 +12,16 @@ const postInput = document.getElementById("postInput");
 const postBtn = document.getElementById("postBtn");
 const postsContainer = document.getElementById("postsContainer");
 
-// ---------- STORAGE ----------
+const notifyBtn = document.getElementById("notifyBtn");
+const notifyPanel = document.getElementById("notificationPanel");
+const notifyList = document.getElementById("notificationList");
+const notifyDot = document.getElementById("notifyDot");
+const markAllReadBtn = document.getElementById("markAllRead");
+
+// ---------- STORAGE KEYS ----------
 const USER_KEY = "openli_user";
 const POST_KEY = "openli_posts";
+const NOTIF_KEY = "openli_notifications";
 const COUNT_PREFIX = "openli_count_";
 
 // =====================================
@@ -49,7 +56,6 @@ joinBtn.onclick = () => {
 
   const user = { club, id: generateUserId(club) };
   saveUser(user);
-
   onboarding.classList.add("hidden");
   location.reload();
 };
@@ -57,16 +63,75 @@ joinBtn.onclick = () => {
 // =====================================
 // TIME FORMAT
 // =====================================
-function formatTime(t) {
-  const s = Math.floor((Date.now() - t) / 1000);
-  if (s < 10) return "just now";
-  if (s < 60) return `${s} sec ago`;
-  const m = Math.floor(s / 60);
-  if (m < 60) return `${m} min ago`;
-  const h = Math.floor(m / 60);
-  if (h < 24) return `${h} hr ago`;
-  return new Date(t).toLocaleDateString();
+function formatTime(time) {
+  const diff = Math.floor((Date.now() - time) / 1000);
+  if (diff < 10) return "just now";
+  if (diff < 60) return `${diff} sec ago`;
+  if (diff < 3600) return `${Math.floor(diff / 60)} min ago`;
+  if (diff < 86400) return `${Math.floor(diff / 3600)} hr ago`;
+  return new Date(time).toLocaleDateString();
 }
+
+// =====================================
+// NOTIFICATIONS
+// =====================================
+function getNotifications() {
+  return JSON.parse(localStorage.getItem(NOTIF_KEY)) || [];
+}
+
+function saveNotifications(list) {
+  localStorage.setItem(NOTIF_KEY, JSON.stringify(list));
+}
+
+function addNotification(type, from, postAuthor) {
+  const user = getUser();
+  if (!user || postAuthor === user.id) return;
+
+  const list = getNotifications();
+  list.unshift({
+    type,
+    from,
+    time: Date.now(),
+    read: false
+  });
+
+  saveNotifications(list);
+  renderNotifications();
+}
+
+function renderNotifications() {
+  const list = getNotifications();
+  notifyList.innerHTML = "";
+
+  let unread = false;
+
+  list.forEach(n => {
+    if (!n.read) unread = true;
+
+    const div = document.createElement("div");
+    div.className = `notification-item ${n.read ? "" : "unread"}`;
+
+    let text = "";
+    if (n.type === "like") text = `${n.from} liked your post`;
+    if (n.type === "comment") text = `${n.from} commented on your post`;
+    if (n.type === "repost") text = `${n.from} reposted your thought`;
+
+    div.innerHTML = `${text} <span class="notif-time">· ${formatTime(n.time)}</span>`;
+    notifyList.appendChild(div);
+  });
+
+  notifyDot.classList.toggle("hidden", !unread);
+}
+
+markAllReadBtn.onclick = () => {
+  const list = getNotifications().map(n => ({ ...n, read: true }));
+  saveNotifications(list);
+  renderNotifications();
+};
+
+notifyBtn.onclick = () => {
+  notifyPanel.classList.toggle("hidden");
+};
 
 // =====================================
 // POSTS STORAGE
@@ -84,49 +149,35 @@ function savePosts(posts) {
 // =====================================
 function renderAllPosts() {
   postsContainer.innerHTML = "";
-
   const posts = getPosts().sort((a, b) => b.time - a.time);
+  const currentUser = getUser();
 
   posts.forEach((post, index) => {
+    const liked = currentUser && post.likes.includes(currentUser.id);
+
     const article = document.createElement("article");
     article.className = "post";
 
-    // ----- REPOST / QUOTE HEADER -----
-    let repostHTML = "";
-    if (post.repostOf) {
-      repostHTML = `<div class="repost-info">🔁 Reposted from ${post.repostOf}</div>`;
-    }
-
-    let quoteHTML = "";
-    if (post.quoteText) {
-      quoteHTML = `
-        <div class="quote-box">
-          <p class="quote-text">${post.quoteText}</p>
-        </div>
-      `;
-    }
-
     article.innerHTML = `
-      ${repostHTML}
-      ${quoteHTML}
+      ${post.repostOf ? `<div class="repost-info">🔁 Reposted from ${post.repostOf}</div>` : ""}
+      ${post.quoteText ? `<div class="quote-box">${post.quoteText}</div>` : ""}
 
-      <p class="post-id">
+      <div class="post-header">
         <strong>${post.id}</strong>
-        <span class="post-time"> · ${formatTime(post.time)}</span>
-      </p>
+        <span class="post-time">· ${formatTime(post.time)}</span>
+      </div>
 
       <p class="post-text">${post.text}</p>
 
       <div class="post-actions">
-        <button class="like-btn">❤️ ${post.likes}</button>
-        <button class="comment-btn">💬 ${post.comments.length}</button>
+        <button class="like-btn ${liked ? "liked" : ""}">❤️ ${post.likes.length}</button>
+        <button class="comment-toggle">💬 ${post.comments.length}</button>
         <button class="repost-btn">🔁</button>
         <button class="quote-btn">💬🔁</button>
       </div>
 
       <div class="comments-box hidden">
         <div class="comments-list"></div>
-
         <div class="comment-input">
           <input type="text" placeholder="Write a comment…" />
           <button>Send</button>
@@ -134,89 +185,87 @@ function renderAllPosts() {
       </div>
     `;
 
-    // ----- LIKE -----
+    // LIKE (ONE TIME ONLY)
     article.querySelector(".like-btn").onclick = () => {
-      post.likes++;
+      if (!currentUser) return alert("Join a club first");
+      if (post.likes.includes(currentUser.id)) return;
+
+      post.likes.push(currentUser.id);
       savePosts(posts);
+      addNotification("like", currentUser.id, post.id);
       renderAllPosts();
     };
 
-    // ----- COMMENT TOGGLE -----
+    // COMMENTS
     const commentsBox = article.querySelector(".comments-box");
-    article.querySelector(".comment-btn").onclick = () => {
+    article.querySelector(".comment-toggle").onclick = () => {
       commentsBox.classList.toggle("hidden");
     };
 
-    // ----- RENDER COMMENTS -----
-    const list = article.querySelector(".comments-list");
+    const commentsList = article.querySelector(".comments-list");
     post.comments.forEach(c => {
       const div = document.createElement("div");
       div.className = "comment";
-      div.innerHTML = `<strong>${c.id}</strong> ${c.text}
-        <span> · ${formatTime(c.time)}</span>`;
-      list.appendChild(div);
+      div.innerHTML = `
+        <strong>${c.id}</strong>
+        <span> · ${formatTime(c.time)}</span>
+        <p>${c.text}</p>
+      `;
+      commentsList.appendChild(div);
     });
 
-    // ----- ADD COMMENT -----
     const input = article.querySelector(".comment-input input");
     const send = article.querySelector(".comment-input button");
 
-    const addComment = () => {
+    send.onclick = () => {
       const text = input.value.trim();
       if (!text) return;
 
-      const user = getUser();
       post.comments.push({
-        id: user.id,
+        id: currentUser.id,
         text,
         time: Date.now()
       });
 
       savePosts(posts);
+      addNotification("comment", currentUser.id, post.id);
       renderAllPosts();
     };
 
-    send.onclick = addComment;
-    input.onkeydown = e => {
-      if (e.key === "Enter") addComment();
-    };
-
-    // ----- REPOST -----
+    // REPOST
     article.querySelector(".repost-btn").onclick = () => {
-      const user = getUser();
-      const repost = {
-        id: user.id,
+      posts.push({
+        id: currentUser.id,
         text: post.text,
         time: Date.now(),
-        likes: 0,
+        likes: [],
         comments: [],
         repostOf: post.id,
         quoteText: null
-      };
+      });
 
-      posts.push(repost);
       savePosts(posts);
+      addNotification("repost", currentUser.id, post.id);
       renderAllPosts();
     };
 
-    // ----- QUOTE -----
+    // QUOTE
     article.querySelector(".quote-btn").onclick = () => {
-      const quote = prompt("Add your quote (optional):");
+      const quote = prompt("Add your quote");
       if (quote === null) return;
 
-      const user = getUser();
-      const quotedPost = {
-        id: user.id,
+      posts.push({
+        id: currentUser.id,
         text: post.text,
         time: Date.now(),
-        likes: 0,
+        likes: [],
         comments: [],
         repostOf: post.id,
         quoteText: quote.trim()
-      };
+      });
 
-      posts.push(quotedPost);
       savePosts(posts);
+      addNotification("repost", currentUser.id, post.id);
       renderAllPosts();
     };
 
@@ -232,14 +281,14 @@ function createPost() {
   if (!text) return;
 
   const user = getUser();
-  if (!user) return alert("Join club first");
+  if (!user) return alert("Join a club first");
 
   const posts = getPosts();
   posts.push({
     id: user.id,
     text,
     time: Date.now(),
-    likes: 0,
+    likes: [],
     comments: [],
     repostOf: null,
     quoteText: null
@@ -268,4 +317,5 @@ document.addEventListener("DOMContentLoaded", () => {
   else showUser(user);
 
   renderAllPosts();
+  renderNotifications();
 });
