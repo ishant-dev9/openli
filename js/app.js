@@ -1,6 +1,6 @@
 // =====================================
-// OPENLI — STEP 5.5 (FINAL COMMENTS FIX)
-// Identity + Posts + Flat Comments
+// OPENLI — STEP 6 (REPOST + QUOTE)
+// Identity + Posts + Comments + Reposts
 // =====================================
 
 // ---------- DOM ----------
@@ -91,7 +91,25 @@ function renderAllPosts() {
     const article = document.createElement("article");
     article.className = "post";
 
+    // ----- REPOST / QUOTE HEADER -----
+    let repostHTML = "";
+    if (post.repostOf) {
+      repostHTML = `<div class="repost-info">🔁 Reposted from ${post.repostOf}</div>`;
+    }
+
+    let quoteHTML = "";
+    if (post.quoteText) {
+      quoteHTML = `
+        <div class="quote-box">
+          <p class="quote-text">${post.quoteText}</p>
+        </div>
+      `;
+    }
+
     article.innerHTML = `
+      ${repostHTML}
+      ${quoteHTML}
+
       <p class="post-id">
         <strong>${post.id}</strong>
         <span class="post-time"> · ${formatTime(post.time)}</span>
@@ -102,6 +120,8 @@ function renderAllPosts() {
       <div class="post-actions">
         <button class="like-btn">❤️ ${post.likes}</button>
         <button class="comment-btn">💬 ${post.comments.length}</button>
+        <button class="repost-btn">🔁</button>
+        <button class="quote-btn">💬🔁</button>
       </div>
 
       <div class="comments-box hidden">
@@ -161,6 +181,45 @@ function renderAllPosts() {
       if (e.key === "Enter") addComment();
     };
 
+    // ----- REPOST -----
+    article.querySelector(".repost-btn").onclick = () => {
+      const user = getUser();
+      const repost = {
+        id: user.id,
+        text: post.text,
+        time: Date.now(),
+        likes: 0,
+        comments: [],
+        repostOf: post.id,
+        quoteText: null
+      };
+
+      posts.push(repost);
+      savePosts(posts);
+      renderAllPosts();
+    };
+
+    // ----- QUOTE -----
+    article.querySelector(".quote-btn").onclick = () => {
+      const quote = prompt("Add your quote (optional):");
+      if (quote === null) return;
+
+      const user = getUser();
+      const quotedPost = {
+        id: user.id,
+        text: post.text,
+        time: Date.now(),
+        likes: 0,
+        comments: [],
+        repostOf: post.id,
+        quoteText: quote.trim()
+      };
+
+      posts.push(quotedPost);
+      savePosts(posts);
+      renderAllPosts();
+    };
+
     postsContainer.appendChild(article);
   });
 }
@@ -181,7 +240,9 @@ function createPost() {
     text,
     time: Date.now(),
     likes: 0,
-    comments: []
+    comments: [],
+    repostOf: null,
+    quoteText: null
   });
 
   savePosts(posts);

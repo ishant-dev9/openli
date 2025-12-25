@@ -51,37 +51,45 @@
            POSTS (ONLY THIS SCROLLS)
       =============================== -->
       <section class="posts-container" id="postsContainer">
-        <!-- POSTS WILL BE INJECTED HERE -->
+        <!-- POSTS WILL BE INJECTED BY JS -->
 
-        <!-- 🔽 SAMPLE STRUCTURE (FOR JS) 🔽 -->
+        <!-- 🔽 SAMPLE STRUCTURE (UPDATED FOR STEP 6) 🔽 -->
         <!--
         <article class="post">
-          <div class="post-header">
+          <p class="post-id">
             <strong>AKSHYA-1</strong>
-            <span class="time">· just now</span>
+            <span class="post-time"> · just now</span>
+          </p>
+
+          <!-- QUOTE (optional) -->
+          <div class="quote-box">
+            <p class="quote-text">This hit hard today.</p>
           </div>
 
-          <p class="post-text">This is a post</p>
+          <!-- REPOST INFO -->
+          <div class="repost-info">
+            🔁 Reposted from <strong>NEEV-3</strong>
+          </div>
 
+          <!-- POST CONTENT -->
+          <p class="post-text">School pressure is real.</p>
+
+          <!-- ACTIONS -->
           <div class="post-actions">
-            <button class="like-btn">❤️ 0</button>
-            <button class="comment-toggle">💬 0 Comments</button>
+            <button class="like-btn">❤️ 2</button>
+            <button class="comment-btn">💬 1</button>
+            <button class="repost-btn">🔁</button>
+            <button class="quote-btn">✍️</button>
           </div>
 
-          <div class="comments hidden">
-            <div class="comment">
-              <strong>AKSHYA-2</strong>
-              <span class="time">· 1 min ago</span>
-              <p>Nice thought</p>
+          <!-- COMMENTS -->
+          <div class="comments-box hidden">
+            <div class="comments-list"></div>
+
+            <div class="comment-input">
+              <input type="text" placeholder="Write a comment…" />
+              <button>Send</button>
             </div>
-
-            <textarea
-              class="comment-input"
-              placeholder="Write a comment..."
-              maxlength="200"
-              rows="2"></textarea>
-
-            <button class="comment-btn">Post Comment</button>
           </div>
         </article>
         -->
@@ -139,6 +147,26 @@
         • One person can join only one club<br>
         • Identity is anonymous & permanent
       </p>
+    </div>
+  </div>
+
+  <!-- ===============================
+       QUOTE MODAL (NEW – STEP 6)
+  =============================== -->
+  <div id="quoteModal" class="quote-modal hidden">
+    <div class="quote-box-modal">
+      <h3>Quote this thought</h3>
+
+      <textarea
+        id="quoteInput"
+        placeholder="Add your thoughts (optional)…"
+        maxlength="200"
+        rows="3"></textarea>
+
+      <div class="quote-actions">
+        <button id="cancelQuote">Cancel</button>
+        <button id="confirmQuote">Post Quote</button>
+      </div>
     </div>
   </div>
 

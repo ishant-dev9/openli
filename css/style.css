@@ -165,8 +165,6 @@ header p {
   border-radius: 14px;
   padding: 16px;
   border: 1px solid var(--border-soft);
-
-  /* 🔥 FIX LONG TEXT */
   word-break: break-word;
   overflow-wrap: anywhere;
 }
@@ -174,6 +172,7 @@ header p {
 .post-text {
   white-space: pre-wrap;
   overflow-wrap: anywhere;
+  margin-top: 6px;
 }
 
 .post-id {
@@ -187,47 +186,71 @@ header p {
 }
 
 /* =========================
+   REPOST + QUOTE UI (STEP 6)
+========================= */
+
+/* Repost info (shown above text) */
+.repost-info {
+  font-size: 13px;
+  color: var(--text-muted);
+  margin-bottom: 6px;
+}
+
+/* Quote box */
+.quote-box {
+  background: var(--accent-soft);
+  border-left: 3px solid var(--accent);
+  padding: 10px 12px;
+  border-radius: 8px;
+  margin-bottom: 8px;
+}
+
+.quote-text {
+  font-size: 14px;
+  color: #1e293b;
+}
+
+/* =========================
    POST ACTIONS
 ========================= */
 .post-actions {
   display: flex;
-  gap: 14px;
+  gap: 16px;
   margin-top: 10px;
 }
 
-.like-btn,
-.comment-toggle {
+.post-actions button {
   background: none;
   border: none;
   cursor: pointer;
   font-size: 14px;
+  color: var(--text-muted);
+}
+
+.post-actions button:hover {
+  color: var(--accent);
 }
 
 .like-btn {
   color: #ef4444;
 }
 
-.comment-toggle {
-  color: var(--accent);
-}
-
 /* =========================
    COMMENTS
 ========================= */
-.comments {
+.comments-box {
   margin-top: 12px;
   padding-top: 10px;
   border-top: 1px solid var(--border-soft);
-  display: none;
 }
 
-.comments.active {
-  display: block;
+.comments-box.hidden {
+  display: none;
 }
 
 .comment {
   font-size: 13px;
-  margin-bottom: 6px;
+  margin-bottom: 8px;
 }
 
 .comment span {
@@ -255,6 +278,67 @@ header p {
   background: var(--accent);
   color: white;
   cursor: pointer;
+}
+
+/* =========================
+   QUOTE MODAL (STEP 6)
+========================= */
+.quote-modal {
+  position: fixed;
+  inset: 0;
+  background: rgba(15, 23, 42, 0.65);
+  backdrop-filter: blur(6px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1000;
+}
+
+.quote-modal.hidden {
+  display: none;
+}
+
+.quote-box-modal {
+  background: white;
+  padding: 22px;
+  border-radius: 14px;
+  width: 90%;
+  max-width: 400px;
+}
+
+.quote-box-modal h3 {
+  margin-bottom: 8px;
+}
+
+.quote-box-modal textarea {
+  width: 100%;
+  padding: 10px;
+  border-radius: 10px;
+  border: 1px solid #d1d5db;
+  resize: none;
+}
+
+.quote-actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: 10px;
+  margin-top: 12px;
+}
+
+.quote-actions button {
+  padding: 8px 14px;
+  border-radius: 999px;
+  border: none;
+  cursor: pointer;
+}
+
+#cancelQuote {
+  background: #e5e7eb;
+}
+
+#confirmQuote {
+  background: var(--accent);
+  color: white;
 }
 
 /* =========================
@@ -287,7 +371,7 @@ header p {
 }
 
 /* =========================
-   ONBOARDING MODAL (FIXED)
+   ONBOARDING MODAL
 ========================= */
 .onboarding {
   position: fixed;
@@ -314,15 +398,6 @@ header p {
   box-shadow: 0 25px 70px rgba(0,0,0,0.3);
 }
 
-.onboarding-box h2 {
-  margin-bottom: 6px;
-}
-
-.onboarding-box p {
-  font-size: 14px;
-  color: var(--text-muted);
-}
-
 .onboarding-box select {
   width: 100%;
   margin-top: 12px;
@@ -340,13 +415,6 @@ header p {
   background: var(--accent);
   color: white;
   font-weight: 600;
-  cursor: pointer;
-}
-
-.onboarding-box .note {
-  margin-top: 10px;
-  font-size: 12px;
-  color: var(--text-muted);
 }
 
 /* =========================
