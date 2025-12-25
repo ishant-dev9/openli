@@ -1,52 +1,50 @@
-/* =========================
-   DESIGN TOKENS
-========================= */
+/* =========================================================
+   ROOT TOKENS
+========================================================= */
 :root {
   --accent: #4f46e5;
   --accent-soft: #eef2ff;
   --accent-glow: rgba(79, 70, 229, 0.35);
 
-  --bg-main: #f5f7fa;
+  --bg-main: #f5f7fb;
   --bg-card: #ffffff;
-  --border-soft: #e5e7eb;
+  --border: #e5e7eb;
 
-  --text-main: #1f2937;
+  --text-main: #111827;
   --text-muted: #6b7280;
 }
 
-/* =========================
+/* =========================================================
    RESET
-========================= */
+========================================================= */
 * {
   margin: 0;
   padding: 0;
   box-sizing: border-box;
-  font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+  font-family: system-ui, -apple-system, Segoe UI, Roboto, sans-serif;
 }
 
 body {
   background: var(--bg-main);
   color: var(--text-main);
   line-height: 1.6;
-  overflow-x: hidden;
 }
 
-/* =========================
+/* =========================================================
    HEADER
-========================= */
+========================================================= */
 header {
-  background: var(--bg-card);
+  background: #fff;
+  border-bottom: 1px solid var(--border);
   text-align: center;
-  padding: 42px 16px 32px;
-  border-bottom: 1px solid var(--border-soft);
+  padding: 36px 16px;
 }
 
 header h1 {
-  font-size: 42px;
+  font-size: 40px;
   font-weight: 900;
+  letter-spacing: -1px;
   color: var(--accent);
-  letter-spacing: -0.6px;
-  text-shadow: 0 6px 18px rgba(79, 70, 229, 0.25);
 }
 
 header p {
@@ -55,53 +53,57 @@ header p {
   color: var(--text-muted);
 }
 
-/* =========================
+/* =========================================================
    LAYOUT
-========================= */
+========================================================= */
 .layout {
-  max-width: 1100px;
+  max-width: 1150px;
   margin: 32px auto;
   padding: 0 16px;
   display: grid;
-  grid-template-columns: minmax(0, 2.5fr) minmax(0, 1fr);
+  grid-template-columns: 2.6fr 1fr;
   gap: 24px;
 }
 
-/* =========================
-   FEED
-========================= */
-.feed {
-  display: flex;
-  flex-direction: column;
-  gap: 16px;
+@media (max-width: 900px) {
+  .layout {
+    grid-template-columns: 1fr;
+  }
 }
 
-/* =========================
+/* =========================================================
    USER CARD
-========================= */
+========================================================= */
 .user-card {
   background: var(--bg-card);
+  border: 1px solid var(--border);
   border-radius: 14px;
   padding: 16px 18px;
   display: flex;
   justify-content: space-between;
   align-items: center;
-  border: 1px solid var(--border-soft);
-  position: sticky;
-  top: 16px;
-  z-index: 20;
+}
+
+.user-left {
+  display: flex;
+  gap: 14px;
+  align-items: center;
 }
 
 .user-avatar {
-  width: 48px;
-  height: 48px;
+  width: 46px;
+  height: 46px;
   border-radius: 50%;
-  background: linear-gradient(135deg, #4f46e5, #3b82f6);
-  color: white;
+  background: linear-gradient(135deg, #4f46e5, #6366f1);
+  color: #fff;
+  font-weight: 800;
   display: flex;
   align-items: center;
   justify-content: center;
-  font-weight: 700;
+}
+
+.user-info strong {
+  font-size: 15px;
 }
 
 .user-info span {
@@ -109,33 +111,105 @@ header p {
   color: var(--text-muted);
 }
 
-/* =========================
+/* =========================================================
+   NOTIFICATIONS
+========================================================= */
+.notify-btn {
+  position: relative;
+  background: none;
+  border: none;
+  font-size: 20px;
+  cursor: pointer;
+}
+
+.notify-dot {
+  position: absolute;
+  top: 3px;
+  right: 3px;
+  width: 8px;
+  height: 8px;
+  background: red;
+  border-radius: 50%;
+}
+
+.notification-panel {
+  position: absolute;
+  right: 0;
+  top: 48px;
+  width: 280px;
+  background: #fff;
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  box-shadow: 0 20px 40px rgba(0,0,0,0.12);
+  z-index: 50;
+}
+
+.notification-panel h4 {
+  padding: 12px 14px;
+  border-bottom: 1px solid var(--border);
+}
+
+.notification-list {
+  max-height: 260px;
+  overflow-y: auto;
+}
+
+.notification-item {
+  padding: 10px 14px;
+  font-size: 13px;
+}
+
+.notification-item.unread {
+  background: var(--accent-soft);
+}
+
+.notif-footer {
+  padding: 10px;
+  border-top: 1px solid var(--border);
+}
+
+.notif-footer button {
+  width: 100%;
+  padding: 8px;
+  border-radius: 8px;
+  border: none;
+  background: var(--accent);
+  color: #fff;
+}
+
+/* =========================================================
    COMPOSER
-========================= */
+========================================================= */
+.composer {
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  border-radius: 14px;
+  padding: 16px;
+}
+
 .composer textarea {
   width: 100%;
-  padding: 14px;
-  border-radius: 14px;
-  border: 1px solid #d1d5db;
   resize: none;
-  outline: none;
-  word-break: break-word;
+  border-radius: 12px;
+  border: 1px solid var(--border);
+  padding: 12px;
+  font-size: 14px;
 }
 
 .composer button {
-  margin-top: 8px;
-  padding: 8px 22px;
+  margin-top: 10px;
+  padding: 10px 22px;
   border-radius: 999px;
   border: none;
   background: var(--accent);
-  color: white;
+  color: #fff;
   font-weight: 600;
   cursor: pointer;
 }
 
-/* =========================
+/* =========================================================
    POSTS
-========================= */
+========================================================= */
 .posts-container {
   display: flex;
   flex-direction: column;
@@ -143,26 +217,21 @@ header p {
 }
 
 .post {
-  background: var(--bg-card);
+  background: #fff;
+  border: 1px solid var(--border);
   border-radius: 14px;
   padding: 16px;
-  border: 1px solid var(--border-soft);
-  word-break: break-word;
-  overflow-wrap: anywhere;
 }
 
 .post-header {
   font-size: 14px;
-}
-
-.post-header span {
-  font-size: 12px;
-  color: var(--text-muted);
+  margin-bottom: 6px;
 }
 
 .post-text {
-  margin-top: 8px;
-  white-space: pre-wrap;
+  word-break: break-word;
+  overflow-wrap: anywhere;
+  font-size: 15px;
 }
 
 .post-actions {
@@ -178,26 +247,27 @@ header p {
   font-size: 14px;
 }
 
-/* =========================
+/* =========================================================
    COMMENTS
-========================= */
+========================================================= */
 .comments {
-  margin-top: 12px;
-  padding-top: 12px;
-  border-top: 1px solid var(--border-soft);
+  margin-top: 14px;
+  padding-top: 10px;
+  border-top: 1px solid var(--border);
 }
 
 .comment {
-  font-size: 13px;
   margin-bottom: 8px;
+  font-size: 13px;
+  word-break: break-word;
 }
 
 .comment-input {
   width: 100%;
-  padding: 8px;
   border-radius: 10px;
-  border: 1px solid #d1d5db;
-  resize: none;
+  border: 1px solid var(--border);
+  padding: 8px;
+  margin-top: 6px;
 }
 
 .comment-btn {
@@ -206,288 +276,161 @@ header p {
   border-radius: 999px;
   border: none;
   background: var(--accent);
-  color: white;
-  cursor: pointer;
+  color: #fff;
 }
 
-/* =========================
-   SIDEBAR
-========================= */
-.sidebar {
-  background: var(--bg-card);
-  border-radius: 14px;
-  padding: 20px;
-  border: 1px solid var(--border-soft);
-  position: sticky;
-  top: 16px;
-}
-
-.sidebar h3 {
-  margin-bottom: 10px;
-}
-
-.sidebar ul {
-  list-style: none;
-  margin-bottom: 12px;
-}
-
-.sidebar li {
-  font-size: 14px;
-  margin-bottom: 6px;
-}
-
-/* =========================
-   ONBOARDING MODAL (FIXED)
-========================= */
-.onboarding {
+/* =========================================================
+   QUOTE MODAL (FIXED – DO NOT BREAK)
+========================================================= */
+.quote-modal {
   position: fixed;
   inset: 0;
-  background: rgba(15, 23, 42, 0.65);
-  backdrop-filter: blur(6px);
+  background: rgba(17,24,39,0.55);
   display: flex;
   align-items: center;
   justify-content: center;
-  z-index: 9999;
-}
-
-.onboarding-box {
-  background: white;
-  padding: 28px;
-  border-radius: 16px;
-  width: 90%;
-  max-width: 380px;
-  text-align: center;
-  box-shadow: 0 30px 80px rgba(0,0,0,0.25);
-}
-
-.onboarding-box h2 {
-  margin-bottom: 6px;
-}
-
-.onboarding-box p {
-  font-size: 14px;
-  color: var(--text-muted);
-}
-
-.onboarding-box select,
-.onboarding-box button {
-  width: 100%;
-  margin-top: 12px;
-  padding: 10px;
-  border-radius: 10px;
-  border: 1px solid #d1d5db;
-}
-
-.onboarding-box button {
-  background: var(--accent);
-  color: white;
-  border: none;
-  cursor: pointer;
-}
-
-.hidden {
-  display: none !important;
-}
-
-/* =========================
-   RESPONSIVE
-========================= */
-@media (max-width: 768px) {
-  .layout {
-    grid-template-columns: 1fr;
-  }
-
-  .sidebar,
-  .user-card {
-    position: static;
-  }
-}
-.like-btn.liked {
-  color: #ef4444;
-  font-weight: 700;
-}
-/* ===============================
-   NOTIFICATION BELL
-=============================== */
-
-.notification-wrapper {
-  position: relative;
-}
-
-.notify-btn {
-  background: none;
-  border: none;
-  font-size: 20px;
-  cursor: pointer;
-  position: relative;
-}
-
-.notify-dot {
-  position: absolute;
-  top: 4px;
-  right: 4px;
-  width: 8px;
-  height: 8px;
-  background: #ef4444;
-  border-radius: 50%;
-}
-
-.notify-dot.hidden {
-  display: none;
-}
-
-/* ===============================
-   NOTIFICATION PANEL (DESKTOP)
-=============================== */
-
-.notification-panel {
-  position: absolute;
-  top: 44px;
-  right: 0;
-  width: 300px;
-  background: #ffffff;
-  border-radius: 14px;
-  border: 1px solid #e5e7eb;
-  box-shadow: 0 20px 40px rgba(0,0,0,0.15);
-  z-index: 1000;
-}
-
-.notification-panel.hidden {
-  display: none;
-}
-
-.notification-panel h4 {
-  padding: 12px 14px;
-  border-bottom: 1px solid #e5e7eb;
-  font-size: 14px;
-}
-
-.notification-list {
-  max-height: 320px;
-  overflow-y: auto;
-}
-
-.notification-item {
-  padding: 10px 14px;
-  font-size: 13px;
-  border-bottom: 1px solid #f1f5f9;
-}
-
-.notification-item.unread {
-  background: #eef2ff;
-  font-weight: 500;
-}
-
-.notif-footer {
-  padding: 10px;
-  text-align: center;
-}
-
-.notif-footer button {
-  background: none;
-  border: none;
-  color: #4f46e5;
-  cursor: pointer;
-  font-size: 13px;
-}
-
-/* ===============================
-   📱 MOBILE SLIDE-IN PANEL
-=============================== */
-
-@media (max-width: 768px) {
-  .notification-panel {
-    position: fixed;
-    top: 0;
-    right: -100%;
-    height: 100vh;
-    width: 85%;
-    max-width: 340px;
-    border-radius: 0;
-    transition: right 0.3s ease;
-    z-index: 9999;
-  }
-
-  .notification-panel.open {
-    right: 0;
-  }
-
-  body.notif-open {
-    overflow: hidden;
-  }
-}
-
-/* ===============================
-   NOTIFICATION PANEL
-=============================== */
-
-.notification-panel {
-  position: absolute;
-  top: 42px;
-  right: 0;
-  width: 280px;
-  background: #ffffff;
-  border-radius: 14px;
-  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.15);
-  border: 1px solid #e5e7eb;
   z-index: 100;
 }
 
-.notification-panel.hidden {
-  display: none;
+.quote-box-modal {
+  background: #fff;
+  border-radius: 16px;
+  padding: 22px;
+  width: 420px;
+  max-width: 90%;
 }
-.notification-header {
+
+.quote-box-modal h3 {
+  margin-bottom: 10px;
+}
+
+.quote-box-modal textarea {
+  width: 100%;
+  border-radius: 12px;
+  border: 1px solid var(--border);
+  padding: 12px;
+  resize: none;
+}
+
+.quote-actions {
   display: flex;
-  justify-content: space-between;
-  align-items: center;
-  padding: 12px 14px;
-  border-bottom: 1px solid #e5e7eb;
+  justify-content: flex-end;
+  gap: 10px;
+  margin-top: 14px;
 }
 
-.notification-header strong {
-  font-size: 14px;
-}
-
-.notification-header button {
-  background: none;
+.quote-actions button {
+  padding: 8px 16px;
+  border-radius: 10px;
   border: none;
-  font-size: 12px;
-  color: #6366f1;
   cursor: pointer;
 }
-.notification-list {
-  max-height: 300px;
-  overflow-y: auto;
+
+#confirmQuote {
+  background: var(--accent);
+  color: #fff;
 }
 
-.notification-item {
-  padding: 10px 14px;
-  font-size: 13px;
-  border-bottom: 1px solid #f1f5f9;
-  cursor: pointer;
-  transition: background 0.2s ease;
+/* =========================================================
+   ONBOARDING MODAL (DO NOT TOUCH)
+========================================================= */
+.onboarding {
+  position: fixed;
+  inset: 0;
+  background: rgba(17,24,39,0.55);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 200;
 }
 
-.notification-item:hover {
-  background: #f9fafb;
-}
-
-.notification-item.unread {
-  background: #eef2ff;
-  font-weight: 500;
-}
-
-.notification-item:last-child {
-  border-bottom: none;
-}
-
-.notif-time {
-  color: #6b7280;
-  font-size: 11px;
-}
-.notification-empty {
-  padding: 16px;
+.onboarding-box {
+  background: #fff;
+  border-radius: 18px;
+  padding: 26px;
+  width: 420px;
+  max-width: 90%;
   text-align: center;
-  font-size: 13px;
-  color: #6b7280;
+}
+
+.onboarding-box select {
+  width: 100%;
+  padding: 10px;
+  border-radius: 10px;
+  border: 1px solid var(--border);
+}
+
+.onboarding-box button {
+  margin-top: 12px;
+  width: 100%;
+  padding: 12px;
+  border-radius: 999px;
+  border: none;
+  background: var(--accent);
+  color: #fff;
+}
+
+/* ========================================================= */
+.hidden {
+  display: none !important;
+}
+/* =========================================================
+   FEED FILTER BAR (CLUB + SORT)
+   SAFE ADDITION – DOES NOT REMOVE ANY UI
+========================================================= */
+
+.feed-filters {
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  border-radius: 14px;
+  padding: 14px 16px;
+  margin-top: 14px;
+  display: flex;
+  gap: 18px;
+  align-items: center;
+  flex-wrap: wrap;
+}
+
+.feed-filters .filter-group {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.feed-filters label {
+  font-size: 12px;
+  color: var(--text-muted);
+}
+
+.feed-filters select {
+  min-width: 140px;
+  padding: 8px 12px;
+  border-radius: 10px;
+  border: 1px solid var(--border);
+  font-size: 14px;
+  background: #fff;
+  cursor: pointer;
+}
+
+/* Hover & focus polish */
+.feed-filters select:hover {
+  border-color: var(--accent);
+}
+
+.feed-filters select:focus {
+  outline: none;
+  border-color: var(--accent);
+  box-shadow: 0 0 0 3px var(--accent-soft);
+}
+
+/* Mobile stacking */
+@media (max-width: 600px) {
+  .feed-filters {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .feed-filters select {
+    width: 100%;
+  }
 }

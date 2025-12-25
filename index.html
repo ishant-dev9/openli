@@ -45,24 +45,39 @@
             <span id="notifyDot" class="notify-dot hidden"></span>
           </button>
 
-          <!-- NOTIFICATION PANEL -->
           <div id="notificationPanel" class="notification-panel hidden">
             <h4>Notifications</h4>
-
-            <div id="notificationList" class="notification-list">
-              <!-- Injected by JS -->
-              <!--
-              <div class="notification-item unread">
-                <span class="notif-text">NEEV-4 commented on your post</span>
-                <span class="notif-time">· 2 min ago</span>
-              </div>
-              -->
-            </div>
-
+            <div id="notificationList" class="notification-list"></div>
             <div class="notif-footer">
               <button id="markAllRead">Mark all as read</button>
             </div>
           </div>
+        </div>
+      </section>
+
+      <!-- ===============================
+           FILTER BAR (STEP 8)
+      =============================== -->
+      <section class="filter-bar">
+        <div class="filter-group">
+          <label for="clubFilter">Club</label>
+          <select id="clubFilter">
+            <option value="ALL">All</option>
+            <option value="NEEV">NEEV</option>
+            <option value="UDAAN">UDAAN</option>
+            <option value="AKSHYA">AKSHYA</option>
+            <option value="FINAL">FINAL</option>
+            <option value="ALUMNI">ALUMNI</option>
+          </select>
+        </div>
+
+        <div class="filter-group">
+          <label for="sortFilter">Sort</label>
+          <select id="sortFilter">
+            <option value="latest">Latest</option>
+            <option value="likes">Most liked</option>
+            <option value="comments">Most discussed</option>
+          </select>
         </div>
       </section>
 
@@ -76,9 +91,7 @@
         <button id="postBtn">Post</button>
       </section>
 
-      <!-- ===============================
-           POSTS (ONLY THIS SCROLLS)
-      =============================== -->
+      <!-- POSTS -->
       <section class="posts-container" id="postsContainer">
         <!-- POSTS INJECTED BY JS -->
       </section>
@@ -86,7 +99,7 @@
     </main>
 
     <!-- ===============================
-         RIGHT: SIDEBAR (STICKY)
+         RIGHT: SIDEBAR
     =============================== -->
     <aside class="sidebar">
       <h3>Clubs & Instructions</h3>
@@ -109,6 +122,37 @@
       <small>Made with ❤️ by Ishant</small>
     </aside>
 
+  </div>
+
+  <!-- ===============================
+       PROFILE MODAL (STEP 8)
+  =============================== -->
+  <div id="profileModal" class="profile-modal hidden">
+    <div class="profile-box">
+      <button id="closeProfile" class="close-btn">✕</button>
+
+      <h2 id="profileId">NEEV-1</h2>
+      <p id="profileClub">Class 9 · NEEV</p>
+
+      <div class="profile-stats">
+        <div>
+          <strong id="statPosts">0</strong>
+          <span>Posts</span>
+        </div>
+        <div>
+          <strong id="statComments">0</strong>
+          <span>Comments</span>
+        </div>
+        <div>
+          <strong id="statLikes">0</strong>
+          <span>Likes</span>
+        </div>
+        <div>
+          <strong id="statReposts">0</strong>
+          <span>Reposts</span>
+        </div>
+      </div>
+    </div>
   </div>
 
   <!-- ===============================
@@ -143,7 +187,6 @@
   <div id="quoteModal" class="quote-modal hidden">
     <div class="quote-box-modal">
       <h3>Quote this thought</h3>
-
       <textarea
         id="quoteInput"
         placeholder="Add your thoughts (optional)…"
@@ -157,9 +200,7 @@
     </div>
   </div>
 
-  <!-- ===============================
-       SCRIPT
-  =============================== -->
+  <!-- SCRIPT -->
   <script src="js/app.js"></script>
 
 </body>
